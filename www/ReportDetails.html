@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- Jquery Mobile -->
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <!-- End Jquery Mobile -->
+    <script type="text/javascript" src="js/general.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+    <title>SKN Crime Report</title>
+</head>
+
+<body>
+    <div data-role="page" id="ReportDetails">
+        <div data-role="panel" id="myPanel" data-swipe-close="true" data-display="overlay" data-position="right"  data-position-fixed="true">
+            <div class="LogoPanel"><img src="img/Events$Coat_of_Arms.png" width="100%" height="150"></div>
+            <ul data-role="listview" class="PanelItems">
+                <!-- Menu items goes here..-->
+            </ul>
+        </div>
+
+        <div data-role="header">
+            <!-- <a href="#HomePage" data-transition="flip" class="ui-btn ui-nodisc-icon ui-corner-all ui-shadow ui-icon-home ui-btn-icon-notext">Home</a> -->
+            <a href="#HomePage" data-transition="flip" class="homebtn ui-btn ui-shadow ui-corner-all"> <img src="img/Events$Coat_of_Arms.png" width="20" height="20"></a>
+            <h1 class="AppHeader">SKN Crime Report</h1>
+            <a href="#myPanel" class="ui-btn ui-nodisc-icon ui-corner-all ui-icon-bars ui-shadow ui-btn-icon-notext">Menu</a>
+        </div>
+
+        <div data-role="main" class="ui-content">
+            <form method="get" action="ReportReview.html">
+                <fieldset class="ui-field-contain" data-type="horizantal">
+                    <div class="What">
+                        <select name="ReportType" id="ReportType" data-native-menu="false" required>
+                            <option value="">Select Report Type</option>
+                            <option value="Future Crime">Future Crime</option>
+                            <option value="Active Crime">Active Crime</option>
+                            <option value="Past Crime">Past Crime</option>
+                            <option value="Tip">Tip</option>
+                        </select>
+                        <a id="UploadImg" class="ui-btn-inline ui-btn ui-icon-camera ui-btn-icon-left">Take Photo</a>
+                        <a id="ChooseImg" class="ui-btn-inline ui-btn ui-icon-grid ui-btn-icon-left">Photo Gallery</a>
+                        <div class="ReportImg"><img id="myImage" src=""></div>
+                        <label for="Source">Send Report Anonymous?</label>
+                        <input type="checkbox" data-role="flipswitch" name="Source" id="Source" data-on-text="Yes" data-off-text="No" checked>
+                    </div>
+                    <div class="ContactDetails">
+                        <label>Contact Details</label>
+                        <!-- <label for="fullname">Full name:</label> -->
+                        <input type="text" name="fullname" id="fullname" placeholder="Your Full Name..">
+                        <!-- <label for="phonenum">Phone Number:</label> -->
+                        <input type="text" name="phonenum" id="phonenum" placeholder="Your Phone Number..">
+                        <!-- <label for="email">E-mail:</label> -->
+                        <input type="email" name="email" id="email" placeholder="Your Email..">
+                    </div>
+                    <div class="When">
+                        <label for="WhenDate">When:</label>
+                        <input type="date" name="WhenDate" id="WhenDate" placeholder="..">
+                    </div>
+                <!-- </fieldset>
+                <fieldset data-role="controlgroup" data-type="vertical"> -->
+                    <div class="Who">
+                        <label for="Alias">Who is invloved:</label>
+                        <input type="text" name="Alias" id="Alias" placeholder="Alias..">
+                        <input type="text" name="Location" id="Location" placeholder="Location..">
+                    </div>
+                </fieldset>
+
+                <label for="info">Additional Information:</label>
+                <textarea name="addinfo" id="info"></textarea>
+                <div class="ReportSubBtn">
+                    <input type="submit" data-icon="check" data-inline="true" value="Submit">
+                </div>
+                <!-- <a href="#ReportReview" class=" ui-btn ui-shadow ui-corner-all" data-transition="slide" data-icon="arrow-l">Review</a> -->
+            </form>
+        </div>
+
+        <div data-role="footer" class="MyFooter" data-position="fixed">
+            <h1></h1>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>

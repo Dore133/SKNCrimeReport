@@ -1,0 +1,159 @@
+#myPanel {
+    background: #2370DC;
+}
+
+.ui-header{
+    background-color: #2370DC!important;
+    border-color: #2370DC!important;
+}
+
+.ui-navbar {
+    max-width: 100%;
+    float: left;
+    width: 100%;
+}
+
+.ui-header h1{
+    color: #fff;
+}
+
+.ui-footer{
+    background-color: #4B5360!important;
+    border-color: #4B5360!important;
+}
+
+.ui-footer h1{
+    color: white;
+}
+
+.ui-header .ui-icon-home, .ui-header .ui-icon-bars{
+    background-color: #2370DC!important;
+    border-color: #2370DC!important;
+}
+
+ul.PanelItems li {
+    background: #f6f6f6;
+    float: left;
+    width: 100%;
+}
+
+.homebtn{
+    background-color: #2370DC!important;border-color: #2370DC!important;
+    border-color: #2370DC!important;
+    border-radius: 20px!important;
+    padding: 5px!important;
+}
+
+.homebtnnav{
+    background-color: rgba(0,0,0,.3)!important;
+    border-color: rgba(0,0,0,.3)!important;
+    width: 22px;
+    height: 22px;
+    margin: 0 auto;
+    border-radius: 20px!important;
+    padding: 1px;
+}
+
+.AppHeader{
+    margin: 0 15%!important;
+}
+
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
+    border-color: #BDBCBC!important;
+    background-color: #BDBCBC!important;
+}
+
+.ui-listview h3 {
+    max-width: 92%;
+}
+
+#overlay {
+    position: absolute;
+    left: 36%;
+    top: 50%;
+    /* bottom: 0; */
+    width: 25%;
+    height: 10%;
+    /* right: 0; */
+    background: #000;
+    border-radius: 10px;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+#loading {
+    width: 50px;
+    height: 57px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -28px 0 0 -25px;
+}
+
+.LogoPanel{
+	float: left;
+    margin-bottom: 15px;
+}
+
+#smallover{
+	left: 30%!important;
+    top: 34%!important;
+    width: 200px!important;
+    height: 100px!important;
+}
+
+.Pages{
+    padding: 0!important;
+}
+
+.Pages li{
+    display: inline;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.backbtn{
+    float: left;
+    height: 44px!important;
+}
+
+.backbtnph{
+    width:100%;
+    margin-bottom: 10px;
+    float: left;
+}
+
+.VidCon{
+    background: #ddd;
+    border-color: #ddd;
+    width: 100%;
+    height: 200px;
+    float: left;
+    margin-bottom: 20px;
+    /*padding: 20px;*/
+}
+
+.MyReportList{
+    /*float: left;*/
+}
+
+.NoReports{
+    display: none;
+}
+
+.ReportSubBtn div {
+    background: #2370DC!important;
+    color: white!important;
+    text-shadow: none!important;
+}
+
+.ContactDetails{
+    display: none;
+}
+
+.ReportImg{
+    display: none;
+}
+
+#info{
+    height: 120px!important;
+}
