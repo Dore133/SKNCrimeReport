@@ -138,6 +138,8 @@ ul.PanelItems li {
 
 .NoReports{
     display: none;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .ReportSubBtn div {
@@ -152,8 +154,25 @@ ul.PanelItems li {
 
 .ReportImg{
     display: none;
+    width: 100%;
+    float: left;
+}
+
+.ReportImg img{
+    margin: 0 auto;
 }
 
 #info{
     height: 120px!important;
+}
+
+.vali{
+    display: none;
+    color: red;
+    font-weight: bold;
+}
+
+.valiActive{
+    margin-bottom: 10px;
+    display: block!important;
 }

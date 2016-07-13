@@ -10,7 +10,7 @@ function getQueryVariable(parameter){
 	return(false);
 }
 
-var loading = function() {
+function loading(){
 	// add the overlay with loading image to the page
 	var over = '<div id="overlay">' +
 	'<img id="loading" src="img/loading.gif">' +
@@ -21,8 +21,19 @@ var loading = function() {
 	$('#overlay').click(function() {
 	   $(this).remove();
 	});
+}
 
-};
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
 //Menu Items
 $(document).on("pageshow",function(){
@@ -50,24 +61,60 @@ $(document).on("pageshow",function(){
 //Report Details
 $(document).on("pageshow","#ReportDetails",function(){
 	//window.location.href = "tel:8694651366";
+	
+	//Populate fields from temp data local storage if coming from review page
 	var LoadInfo = getQueryVariable('back');
-	//alert(LoadInfo);
 	if(LoadInfo == 1){
-		//alert('yes');
-		$(document).ready(loading);
-		$('#ReportType').val($( "body" ).data( "ReportType" )) ;
-		$('#overlay').remove();
+		//alert('Adding to fields');
+		DataTempArray = JSON.parse(localStorage.DataTemp);
+
+		window.setTimeout(AddValues, 10);
+		
+		function AddValues(){
+			if(DataTempArray[0].Source == 'not checked'){
+				$('.ContactDetails').fadeIn();
+				sourceval = 'off';
+			}
+			else{
+				sourceval = 'on';
+			}
+
+			if(DataTempArray[0].ReportType == 'Active Crime'){
+				$('.When').fadeOut();
+			}
+
+			$('#ReportType').val(DataTempArray[0].ReportType);
+			$('#Source').val(sourceval);
+			$('#Alias').val(DataTempArray[0].Alias);
+			$('#Location').val(DataTempArray[0].Place);
+			$('#info').val(DataTempArray[0].Info);
+			$('#fullname').val(DataTempArray[0].FullName);
+			$('#phonenum').val(DataTempArray[0].PhoneNum);
+			$('#email').val(DataTempArray[0].Email);
+			$('#WhenDate').val(DataTempArray[0].WhenDate);
+		}
 	}
-
+	
+	//Take a photo with camera
 	$('#UploadImg').bind( 'click', function(event, ui) {
-  		navigator.camera.getPicture(onSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+  		navigator.camera.getPicture(onSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
   		//Camera.DestinationType.DATA_URL base64
-	    function onSuccess(imageURI) {
+	    function onSuccess(imageData) {
 	        var image = document.getElementById('myImage'),
-	        	imgpath = imageURI;
+	        	imgpath = imageData;
 
-	        $( "body" ).data( "imgpathcam", imageURI);
-	        image.src = imageURI;
+	        //Save Img Path to local storage
+	        var ImgTempArray = [];
+
+	        var ImgTempObj = {
+					ImgPath: imageData
+				};
+
+			ImgTempArray.push(ImgTempObj);
+
+			localStorage.ImgTemp = JSON.stringify(ImgTempArray);
+	        image.src = "data:image/jpeg;base64," + imageData;;
+	        $('.ReportImg').show();
 	    }
 
 	    function onFail(message) {
@@ -75,15 +122,28 @@ $(document).on("pageshow","#ReportDetails",function(){
 	    }
 	});
 
+	//Upload Img from photo library
 	$('#ChooseImg').bind( 'click', function(event, ui) {
-		navigator.camera.getPicture(onSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI, sourceType: Camera.PictureSourceType.PHOTOLIBRARY });
+		navigator.camera.getPicture(onSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL, sourceType: Camera.PictureSourceType.PHOTOLIBRARY });
   		//Camera.DestinationType.DATA_URL base64
-	    function onSuccess(imageURI) {
+  		//Camera.DestinationType.FILE_URI imgpath
+  		
+	    function onSuccess(imageData) {
 	        var image = document.getElementById('myImage'),
-	        	imgpath = imageURI;
+	        	imgpath = imageData;
 
-	        $( "body" ).data( "imgpathgal", imageURI);
-	        image.src = imageURI;
+	        //Save Img Path to local storage
+	        var ImgTempArray = [];
+
+	        var ImgTempObj = {
+					ImgPath: imageData
+				};
+
+			ImgTempArray.push(ImgTempObj);
+
+			localStorage.ImgTemp = JSON.stringify(ImgTempArray);
+	        image.src = "data:image/jpeg;base64," + imageData;
+	        $('.ReportImg').show();
 	    }
 
 	    function onFail(message) {
@@ -114,118 +174,221 @@ $(document).on("pageshow","#ReportDetails",function(){
   		}
 	});
 
-	//Validation
+	//Form Validation
+	$("#ReportForm").submit(function() {
+		//alert('submit');
+		var Proceed = 0;
+		if($('#Source').is(':checked') == false){
+  			//alert('Validation source not check');
+  			if ($("#fullname").val() == "") {
+				$("#nameval").text("Please enter your name...").show().addClass('valiActive');
+				Proceed = Proceed + 1;
+			}
+			else{
+				$("#nameval").fadeOut().removeClass('valiActive');
+			}
 
+			if ($("#phonenum").val() == "") {
+				$("#phoneval").text("Please enter your phone number...").show().addClass('valiActive');
+				Proceed = Proceed + 1;
+			}
+			else{
+				$("#phoneval").fadeOut().removeClass('valiActive');
+			}
+
+			if ($("#email").val() == "") {
+				$("#emailval").text("Please enter your email address...").show().addClass('valiActive');
+				Proceed = Proceed + 1;
+			}
+			else{
+				$("#emailval").fadeOut().removeClass('valiActive');
+			}
+  		}
+
+  		if($('#ReportType').val() != 'Active Crime'){
+  			if ($("#WhenDate").val() == "") {
+				$("#dateval").text("Please when this crime occured...").show().addClass('valiActive');
+				Proceed = Proceed + 1;
+			}
+			else{
+				$("#dateval").fadeOut().removeClass('valiActive');
+			}
+  		}
+
+  		if($('#info').val() == ''){
+  			$("#infoval").text("Please enter additional information...").show().addClass('valiActive');
+  			Proceed = Proceed + 1;
+  		}
+  		else{
+			$("#infoval").fadeOut().removeClass('valiActive');
+		}
+
+  		if($('#Location').val() == ''){
+  			$("#locval").text("Please enter the location of this crime...").show().addClass('valiActive');
+  			Proceed = Proceed + 1;
+  		}
+  		else{
+			$("#locval").fadeOut().removeClass('valiActive');
+		}
+
+		if(Proceed == 0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	});
 });
 
 //Save Report Details for Review & Submission
 $(document).on("pagebeforehide","#ReportDetails",function(){
-	// alert('About to hide');
-	// alert($('#ReportType').val());
-	$( "body" ).data( "ReportType", $('#ReportType').val() );
-	$( "body" ).data( "Source", $('#Source').val() );
-	$( "body" ).data( "fullname", $('#fullname').val() );
-	$( "body" ).data( "email", $('#email').val() );
-	$( "body" ).data( "phonenum", $('#phonenum').val() );
-	$( "body" ).data( "WhenDate", $('#WhenDate').val() );
-	$( "body" ).data( "Alias", $('#Alias').val() );
-	$( "body" ).data( "info", $('#info').val() );
+	//Form Validation
+
+	//alert('Adding to temp data');
+	//Before Moving page add data from fields to temp data storage
+	var DataTempArray = [];
+
+	if($('#Source').is(':checked')){
+		var sourcechecked = 'checked';
+	}
+	else{
+		var sourcechecked = 'not checked';
+	}
+
+    var DataTempObj = {
+			ReportType: $('#ReportType').val(),
+			Source: sourcechecked,
+			Alias: $('#Alias').val(),
+			Place: $('#Location').val(),
+			Info: $('#info').val(),
+			FullName: $('#fullname').val(),
+			PhoneNum: $('#phonenum').val(),
+			Email: $('#email').val(),
+			WhenDate: $('#WhenDate').val()
+		};
+
+	DataTempArray.push(DataTempObj);
+
+	localStorage.DataTemp = JSON.stringify(DataTempArray);
+	//alert('Added to localStorage');
 });
 
+//Replace special characters from string
 function replacespecial(string){
 	goodstring = string.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g,' ');
-
 	return(goodstring)
 }
 
 //Details Page
 $(document).on("pageshow","#ReportReview",function(){
-	$(document).ready(loading);
-	var html = '',
-		parameters = $(location).attr('search'),
-		BackLink = 'ReportDetails.html'+ parameters + '&back=1',
-		ReportType = getQueryVariable('ReportType'),
-		Source = getQueryVariable('Source'),
-		Alias = getQueryVariable('Alias'),
-		Locationz = getQueryVariable('Location'),
-		info = getQueryVariable('addinfo');
+	//$(document).ready(loading);
+	var html = '';
 
-	if(Source == 'false'){
-		var fullname = getQueryVariable('fullname'),
-			phonenum = getQueryVariable('phonenum'),
-			email = getQueryVariable('email');
+	DataTempArray = JSON.parse(localStorage.DataTemp);
+
+	html += '<tr><td>Type: </td><td>'+ DataTempArray[0].ReportType +'</td></tr>';
+	//html += '<tr><td>Source: </td><td>'+ replacespecial(Source) +'</td></tr>';
+
+	if(DataTempArray[0].Source == 'not checked'){
+		html += '<tr><td>Full Name: </td><td>'+ DataTempArray[0].FullName +'</td></tr>';
+		html += '<tr><td>Phone #: </td><td>'+ DataTempArray[0].PhoneNum +'</td></tr>';
+		html += '<tr><td>Email: </td><td>'+ DataTempArray[0].Email +'</td></tr>';
 	}
 
-	if(ReportType != 'AC'){
-		var WhenDate = getQueryVariable('WhenDate');
-	}
+	// if(replacespecial(ReportType) != 'Active Crime'){
+	// 	var WhenDate = getQueryVariable('WhenDate');
+	// }
+	// else{
+	// 	var WhenDate = formatDate(new Date());
+	// }
 
-	html += '<tr><td>Type: </td><td>'+ replacespecial(ReportType) +'</td></tr>';
-	html += '<tr><td>Source: </td><td>'+ replacespecial(Source) +'</td></tr>';
+	html += '<tr><td>When: </td><td>'+ DataTempArray[0].WhenDate +'</td></tr>';
+	html += '<tr><td>Alias: </td><td>'+ DataTempArray[0].Alias +'</td></tr>';
+	html += '<tr><td>Location: </td><td>'+ DataTempArray[0].Place +'</td></tr>';
+	html += '<tr><td>Add Info: </td><td>'+ DataTempArray[0].Info +'</td></tr>';
 
-	if(Source == 'false'){
-		html += '<tr><td>Full name: </td><td>'+ replacespecial(fullname) +'</td></tr>';
-		html += '<tr><td>Phone Number: </td><td>'+ decodeURI(phonenum) +'</td></tr>';
-		html += '<tr><td>Email: </td><td>'+ decodeURI(email) +'</td></tr>';
-	}
-
-	html += '<tr><td>Alias: </td><td>'+ replacespecial(Alias) +'</td></tr>';
-	html += '<tr><td>Locationz: </td><td>'+ replacespecial(Locationz) +'</td></tr>';
-	html += '<tr><td>Additional info: </td><td>'+ replacespecial(info) +'</td></tr>';
-
-	$('#overlay').remove();
+	//$('#overlay').remove();
 
 	$('#ReviewTable').html(html);
-	$('#BackToDetails').attr('href', BackLink);
-	$('#SubmitReport').attr('href', 'SubmitReport.html'+parameters);
+	$('#BackToDetails').attr('href', 'ReportDetails.html?back=1');
+	$('#SubmitReport').attr('href', 'SubmitReport.html');
 });
 
 //Details Page
 $(document).on("pageshow","#SubmitReport",function(){
-	$(document).ready(loading);
+	//$(document).ready(loading);
 
-	//AddtoStorage();
+	//Check if the MyCrimeReports from local storage exist
 	if (localStorage.MyCrimeReports) {
 		CrimeReportArray = JSON.parse(localStorage.MyCrimeReports);
+		var RpIdz = CrimeReportArray.length;
 	}
 	else{
 		var CrimeReportArray = [];
+		var RpIdz = 0;
 	}
+
+	DataTempArray = JSON.parse(localStorage.DataTemp);
 		
-	var parameters = $(location).attr('search'),
-		ReportType = getQueryVariable('ReportType'),
-		Source = getQueryVariable('Source'),
-		Alias = getQueryVariable('Alias'),
-		Locationz = getQueryVariable('Location'),
-		info = getQueryVariable('addinfo'),
-		html = '';
+	var html = '';
+
+	// if(DataTempArray[0].Source == 'not checked'){
+	// 	var fullname = '',
+	// 		phonenum = '',
+	// 		email = '',
+	// 		Source = 'details';
+	// }
+
+	// if(DataTempArray[0].ReportType == 'Active Crime'){
+	// 	var WhenDate = formatDate(new Date());
+	// }
+
+	if(localStorage.ImgTemp){
+		ImgArray = JSON.parse(localStorage.ImgTemp);
+		ImgData = ImgArray[0].ImgPath;
+	}
+	else{
+		ImgData = '';
+	}
 
 	var CRObj = {
-			ReportType: replacespecial(ReportType),
-			Alias: replacespecial(Alias),
-			Place: replacespecial(Locationz),
-			info: replacespecial(info)
+			ReportId: RpIdz,
+			ReportDate: formatDate(new Date()),
+			ReportType: DataTempArray[0].ReportType,
+			Alias: DataTempArray[0].Alias,
+			Place: DataTempArray[0].Place,
+			Info: DataTempArray[0].Info,
+			FullName: DataTempArray[0].FullName,
+			PhoneNum: DataTempArray[0].PhoneNum,
+			Email: DataTempArray[0].Email,
+			Source: DataTempArray[0].Source,
+			Img: ImgData,
+			WhenDate: DataTempArray[0].WhenDate
 		};
+
 
 	CrimeReportArray.push(CRObj);
 
+	//Add to local storage and remove temp data
 	localStorage.MyCrimeReports = JSON.stringify(CrimeReportArray);
+	localStorage.removeItem('DataTemp');
+	localStorage.removeItem('ImgTemp');
 
 	$('#overlay').remove();
 
 });
 
 $(document).on("pageshow","#HomePage",function(){
+
+	//Check if MyCrimeReports from local storage exist and Populate "My Reports Lists"
 	var html = '';
 	if(typeof(Storage) !== "undefined") {
 	    if (localStorage.MyCrimeReports) {
 	    	var locz = localStorage.MyCrimeReports;
 	    	var myCrimeReports = JSON.parse(locz);
-	    	//alert(myCrimeReports.length);
-	    	// alert( myCrimeReports[0].ReportType);
 	    	if(myCrimeReports.length > 0){
 	    		for(var i = 0 ; i < myCrimeReports.length; i++){
-		    		html += '<li><a href="" class="ui-btn ui-btn-icon-right ui-icon-carat-r">'+ myCrimeReports[i].ReportType +'</a></li>';
+		    		html += '<li><a href="MyReport.html?id='+myCrimeReports[i].ReportId+'" class="ui-btn ui-btn-icon-right ui-icon-carat-r">'+ myCrimeReports[i].ReportType +'</a></li>';
 		    	}
 		    	$('.MyReportList').html(html);
 		    	$('.NoReports').hide();
@@ -245,5 +408,27 @@ $(document).on("pageshow","#HomePage",function(){
 	$('#ClearReports').bind( 'click', function(event, ui) {
 		localStorage.clear();
 	});
+	
+});
+
+$(document).on("pageshow","#MyReport",function(){
+
+	ReportId = getQueryVariable('id');
+
+	myCrimeReports = JSON.parse(localStorage.MyCrimeReports);
+
+	if(myCrimeReports[ReportId].Img != ''){
+		$('.ReportImg').show();
+		$('#myImage').attr('src','data:image/jpeg;base64,' + myCrimeReports[ReportId].Img);
+	}
+
+	$('.ReportType').append('<b>' + myCrimeReports[ReportId].ReportType + '</b>');
+	$('.Alias').append('<b>' + myCrimeReports[ReportId].Alias + '</b>');
+	$('.Location').append('<b>' + myCrimeReports[ReportId].Place + '</b>');
+	$('.Info').append('<b>' + myCrimeReports[ReportId].Info + '</b>');
+	// $('.fullname').append(myCrimeReports[ReportId].FullName + '</b>');
+	// $('.phonenum').append(myCrimeReports[ReportId].PhoneNum + '</b>');
+	// $('.email').append(myCrimeReports[ReportId].Email + '</b>');
+	$('.WhenDate').append('<b>' + myCrimeReports[ReportId].WhenDate + '</b>');
 	
 });

@@ -34,8 +34,8 @@
         </div>
 
         <div data-role="main" class="ui-content">
-            <form method="get" action="ReportReview.html">
-                <fieldset class="ui-field-contain" data-type="horizantal">
+            <form id="ReportForm" method="get" action="ReportReview.html">
+                <fieldset class="ui-field-contain" data-type="vertical">
                     <div class="What">
                         <select name="ReportType" id="ReportType" data-native-menu="false" required>
                             <option value="">Select Report Type</option>
@@ -46,7 +46,7 @@
                         </select>
                         <a id="UploadImg" class="ui-btn-inline ui-btn ui-icon-camera ui-btn-icon-left">Take Photo</a>
                         <a id="ChooseImg" class="ui-btn-inline ui-btn ui-icon-grid ui-btn-icon-left">Photo Gallery</a>
-                        <div class="ReportImg"><img id="myImage" src=""></div>
+                        <div class="ReportImg"><img id="myImage" src="" width="80%" height="100"></div>
                         <label for="Source">Send Report Anonymous?</label>
                         <input type="checkbox" data-role="flipswitch" name="Source" id="Source" data-on-text="Yes" data-off-text="No" checked>
                     </div>
@@ -54,26 +54,31 @@
                         <label>Contact Details</label>
                         <!-- <label for="fullname">Full name:</label> -->
                         <input type="text" name="fullname" id="fullname" placeholder="Your Full Name..">
+                        <span class="vali" id="nameval"></span>
                         <!-- <label for="phonenum">Phone Number:</label> -->
-                        <input type="text" name="phonenum" id="phonenum" placeholder="Your Phone Number..">
+                        <input type="number" name="phonenum" id="phonenum" placeholder="Your Phone Number..">
+                        <span class="vali" id="phoneval"></span>
                         <!-- <label for="email">E-mail:</label> -->
                         <input type="email" name="email" id="email" placeholder="Your Email..">
+                        <span class="vali" id="emailval"></span>
                     </div>
                     <div class="When">
                         <label for="WhenDate">When:</label>
-                        <input type="date" name="WhenDate" id="WhenDate" placeholder="..">
+                        <input type="date" name="WhenDate" id="WhenDate">
+                        <span class="vali" id="dateval"></span>
                     </div>
-                <!-- </fieldset>
-                <fieldset data-role="controlgroup" data-type="vertical"> -->
                     <div class="Who">
                         <label for="Alias">Who is invloved:</label>
                         <input type="text" name="Alias" id="Alias" placeholder="Alias..">
                         <input type="text" name="Location" id="Location" placeholder="Location..">
+                        <span class="vali" id="locval"></span>
                     </div>
+
+                    <label for="info">Additional Information:</label>
+                    <textarea name="addinfo" id="info"></textarea>
+                    <span class="vali" id="infoval"></span>
                 </fieldset>
 
-                <label for="info">Additional Information:</label>
-                <textarea name="addinfo" id="info"></textarea>
                 <div class="ReportSubBtn">
                     <input type="submit" data-icon="check" data-inline="true" value="Submit">
                 </div>
