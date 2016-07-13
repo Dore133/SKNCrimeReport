@@ -29,27 +29,27 @@
   <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1"/>
   <icon src="icon.png"/>
   <platform name="android">
-    <icon src="res/icon/android/crimereporting-ldpi-icon.png" density="ldpi"/>
-    <icon src="res/icon/android/crimereporting-mdpi-icon.png" density="mdpi"/>
-    <icon src="res/icon/android/crimereporting-hdpi-icon.png" density="hdpi"/>
-    <icon src="res/icon/android/crimereporting-xhdpi-icon.png" density="xhdpi"/>
-    <icon src="res/icon/android/crimereporting-xxhdpi-icon.png" density="xxhdpi"/>
-    <icon src="res/icon/android/crimereporting-xxxhdpi-icon.png" density="xxxhdpi"/>
-    <splash src="res/screen/android/screen-ldpi-landscape.png" density="land-ldpi"/>
-    <splash src="res/screen/android/screen-mdpi-landscape.png" density="land-mdpi"/>
-    <splash src="res/screen/android/screen-hdpi-landscape.png" density="land-hdpi"/>
-    <splash src="res/screen/android/screen-xhdpi-landscape.png" density="land-xhdpi"/>
-    <splash src="res/screen/android/screen-xhdpi-landscape.png" density="land-xxhdpi"/>
-    <splash src="res/screen/android/screen-xhdpi-landscape.png" density="land-xxxhdpi"/>
-    <splash src="res/screen/android/screen-ldpi-portrait.png" density="port-ldpi"/>
-    <splash src="res/screen/android/screen-mdpi-portrait.png" density="port-mdpi"/>
-    <splash src="res/screen/android/screen-hdpi-portrait.png" density="port-hdpi"/>
-    <splash src="res/screen/android/screen-xhdpi-portrait.png" density="port-xhdpi"/>
-    <splash src="res/screen/android/screen-xhdpi-portrait.png" density="port-xxhdpi"/>
-    <splash src="res/screen/android/screen-xhdpi-portrait.png" density="port-xxxhdpi"/>
+    <icon src="www/res/icon/android/crimereporting-ldpi-icon.png" density="ldpi"/>
+    <icon src="www/res/icon/android/crimereporting-mdpi-icon.png" density="mdpi"/>
+    <icon src="www/res/icon/android/crimereporting-hdpi-icon.png" density="hdpi"/>
+    <icon src="www/res/icon/android/crimereporting-xhdpi-icon.png" density="xhdpi"/>
+    <icon src="www/res/icon/android/crimereporting-xxhdpi-icon.png" density="xxhdpi"/>
+    <icon src="www/res/icon/android/crimereporting-xxxhdpi-icon.png" density="xxxhdpi"/>
+    <splash src="www/res/screen/android/screen-ldpi-landscape.png" density="land-ldpi"/>
+    <splash src="www/res/screen/android/screen-mdpi-landscape.png" density="land-mdpi"/>
+    <splash src="www/res/screen/android/screen-hdpi-landscape.png" density="land-hdpi"/>
+    <splash src="www/res/screen/android/screen-xhdpi-landscape.png" density="land-xhdpi"/>
+    <splash src="www/res/screen/android/screen-xhdpi-landscape.png" density="land-xxhdpi"/>
+    <splash src="www/res/screen/android/screen-xhdpi-landscape.png" density="land-xxxhdpi"/>
+    <splash src="www/res/screen/android/screen-ldpi-portrait.png" density="port-ldpi"/>
+    <splash src="www/res/screen/android/screen-mdpi-portrait.png" density="port-mdpi"/>
+    <splash src="www/res/screen/android/screen-hdpi-portrait.png" density="port-hdpi"/>
+    <splash src="www/res/screen/android/screen-xhdpi-portrait.png" density="port-xhdpi"/>
+    <splash src="www/res/screen/android/screen-xhdpi-portrait.png" density="port-xxhdpi"/>
+    <splash src="www/res/screen/android/screen-xhdpi-portrait.png" density="port-xxxhdpi"/>
   </platform>
   <platform name="ios">
-    <icon src="www/res/icon/ios/icon.png" platform="ios" width="57" height="57"/>
+    <!-- <icon src="www/res/icon/ios/icon.png" platform="ios" width="57" height="57"/>
     <icon src="www/res/icon/ios/icon@2x.png" platform="ios" width="114" height="114"/>
     <icon src="www/res/icon/ios/icon-40.png" platform="ios" width="40" height="40"/>
     <icon src="www/res/icon/ios/icon-40@2x.png" platform="ios" width="80" height="80"/>
@@ -74,15 +74,15 @@
     <splash src="www/res/screen/ios/Default-Portrait@2x~ipad.png" platform="ios" width="1536" height="2048"/>
     <splash src="www/res/screen/ios/Default-Portrait~ipad.png" platform="ios" width="768" height="1024"/>
     <splash src="www/res/screen/ios/Default@2x~iphone.png" platform="ios" width="640" height="960"/>
-    <splash src="www/res/screen/ios/Default~iphone.png" platform="ios" width="320" height="480"/>
+    <splash src="www/res/screen/ios/Default~iphone.png" platform="ios" width="320" height="480"/> -->
   </platform>
   <platform name="wp8">
-    <icon src="www/res/icon/wp8/ApplicationIcon.png" platform="wp8" width="99" height="99"/>
+    <!-- <icon src="www/res/icon/wp8/ApplicationIcon.png" platform="wp8" width="99" height="99"/>
     <icon src="www/res/icon/wp8/Background.png" platform="wp8" width="159" height="159"/>
-    <splash src="www/res/screen/wp8/screen-portrait.jpg" platform="wp8" width="768" height="1280"/>
+    <splash src="www/res/screen/wp8/screen-portrait.jpg" platform="wp8" width="768" height="1280"/> -->
   </platform>
   <platform name="windows">
-    <icon src="www/res/icon/windows/Square150x150Logo.scale-100.png" platform="windows" width="150" height="150"/>
+    <!-- <icon src="www/res/icon/windows/Square150x150Logo.scale-100.png" platform="windows" width="150" height="150"/>
     <icon src="www/res/icon/windows/Square30x30Logo.scale-100.png" platform="windows" width="30" height="30"/>
     <icon src="www/res/icon/windows/StoreLogo.scale-100.png" platform="windows" width="50" height="50"/>
     <splash src="www/res/screen/windows/SplashScreen.scale-100.png" platform="windows" width="620" height="300"/>
@@ -96,7 +96,7 @@
     <icon src="www/res/icon/windows/Square310x310Logo.scale-100.png" platform="windows" width="310" height="310"/>
     <icon src="www/res/icon/windows/Wide310x150Logo.scale-100.png" platform="windows" width="310" height="150"/>
     <icon src="www/res/icon/windows/Wide310x150Logo.scale-240.png" platform="windows" width="744" height="360"/>
-    <splash src="www/res/screen/windows/SplashScreenPhone.scale-240.png" platform="windows" width="1152" height="1920"/>
+    <splash src="www/res/screen/windows/SplashScreenPhone.scale-240.png" platform="windows" width="1152" height="1920"/> -->
   </platform>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
