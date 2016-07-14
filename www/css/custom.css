@@ -3,6 +3,7 @@
 }
 
 .ui-header{
+    height: 45px!important;
     background-color: #2370DC!important;
     border-color: #2370DC!important;
 }
@@ -24,11 +25,16 @@
 
 .ui-footer h1{
     color: white;
+    text-shadow: none;
 }
 
 .ui-header .ui-icon-home, .ui-header .ui-icon-bars{
     background-color: #2370DC!important;
     border-color: #2370DC!important;
+}
+
+.ui-content{
+    text-shadow: none;
 }
 
 ul.PanelItems li {
@@ -38,24 +44,53 @@ ul.PanelItems li {
 }
 
 .homebtn{
-    background-color: #2370DC!important;border-color: #2370DC!important;
+    /*background-color: #2370DC!important;border-color: #2370DC!important;
     border-color: #2370DC!important;
     border-radius: 20px!important;
-    padding: 5px!important;
+    padding: 5px!important;*/
+    /*...*/
+    padding: 0px!important;
+    background-color: transparent !important;
+    border: none !important;
 }
 
-.homebtnnav{
-    background-color: rgba(0,0,0,.3)!important;
-    border-color: rgba(0,0,0,.3)!important;
-    width: 22px;
-    height: 22px;
-    margin: 0 auto;
-    border-radius: 20px!important;
-    padding: 1px;
+.myhomebtn:after {
+    width: 38px !important;
+    height: 38px !important;
+    top: 12px !important;
+    background-color: transparent !IMPORTANT;
+    background-size: 33px 60px;
 }
+
+/*.homebtn img{
+    width: 30px!important;
+}*/
+
+.mymenubtn:after {
+    width: 38px !important;
+    height: 38px !important;
+    top: 12px !important;
+    background-color: transparent !IMPORTANT;
+    background-size: 33px 60px!important;
+}
+
+.mymenubtn {
+    background: transparent !important;
+    border: none !important;
+    width: 50px!important;
+    height: 40px!important;
+    padding: 0;
+}
+
 
 .AppHeader{
     margin: 0 15%!important;
+    /*...*/
+    text-shadow: none!important;
+    font-size: larger!important;
+    font-weight: bold!important; 
+    color: white!important;
+    font-family: sans-serif!important;
 }
 
 .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
@@ -128,12 +163,13 @@ ul.PanelItems li {
     width: 100%;
     height: 200px;
     float: left;
-    margin-bottom: 20px;
-    /*padding: 20px;*/
+    /*margin-bottom: 20px;
+    padding: 20px;*/
 }
 
 .MyReportList{
     /*float: left;*/
+    margin-bottom: 10px!important;
 }
 
 .NoReports{
@@ -156,6 +192,7 @@ ul.PanelItems li {
     display: none;
     width: 100%;
     float: left;
+    text-align: center;
 }
 
 .ReportImg img{
@@ -189,3 +226,22 @@ ul.PanelItems li {
 #ChooseImg{
     float: right;
 }*/
+
+#AddReport, #ClearReports{
+    /*margin: 0 auto;*/
+    background: #2370DC!important;
+    font-size: 30px;
+}
+
+#AddReport:after, #ClearReports:after{
+    background-size: 20px;
+}
+
+#ClearPhoto{
+    background: #dc2323!important;
+    font-size: 15px;
+}
+
+#ClearPhoto:after{
+    background-size: 10px;
+}

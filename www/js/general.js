@@ -54,7 +54,7 @@ $(document).on("pageshow",function(){
 		//alert($( ".PanelItems" ).html());
 	}
 
-	$( "#"+ActivePageN+" .MyFooter h1" ).html("Copyright Gov.Kn 2016 &copy;");
+	$( "#"+ActivePageN+" .MyFooter h1" ).html("Copyright gov.kn 2016 &copy;");
 
 });
 
@@ -74,6 +74,7 @@ $(document).on("pageshow","#ReportDetails",function(){
 			if(DataTempArray[0].Source == 'not checked'){
 				$('.ContactDetails').fadeIn();
 				sourceval = 'off';
+				$('.ui-flipswitch').removeClass('ui-flipswitch-active');
 			}
 			else{
 				sourceval = 'on';
@@ -83,8 +84,15 @@ $(document).on("pageshow","#ReportDetails",function(){
 				$('.When').fadeOut();
 			}
 
+			if(localStorage.ImgTemp){
+				ImgTemp = JSON.parse(localStorage.ImgTemp);
+				$('.ReportImg').show();
+				$('#myImage').attr('src','data:image/jpeg;base64,' + ImgTemp[0].ImgPath);
+			}
+
 			$('#ReportType').val(DataTempArray[0].ReportType);
-			$('#Source').val(sourceval);
+			$('#ReportType-button span').text(DataTempArray[0].ReportType);
+			$('#Source').val(DataTempArray[0].Source);
 			$('#Alias').val(DataTempArray[0].Alias);
 			$('#Location').val(DataTempArray[0].Place);
 			$('#info').val(DataTempArray[0].Info);
@@ -118,10 +126,10 @@ $(document).on("pageshow","#ReportDetails",function(){
 	    }
 
 	    function onFail(message) {
-	        alert('Failed because: ' + message);
+	        console.log('Failed because: ' + message);
 	    }
 	});
-
+	
 	//Upload Img from photo library
 	$('#ChooseImg').bind( 'click', function(event, ui) {
 		navigator.camera.getPicture(onSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL, sourceType: Camera.PictureSourceType.PHOTOLIBRARY });
@@ -147,9 +155,21 @@ $(document).on("pageshow","#ReportDetails",function(){
 	    }
 
 	    function onFail(message) {
-	        alert('Failed because: ' + message);
+	        console.log('Failed because: ' + message);
 	    }
 	});
+
+	//Remove Photo from que
+	$('#ClearPhoto').bind( 'click', function(event, ui) {
+		//Remove Img Path from local storage
+        localStorage.removeItem('ImgTemp');
+
+        var image = document.getElementById('myImage');
+        image.src = "";
+		
+		$('.ReportImg').hide();        
+	});
+
 
 	//Show Date of Crime
 	$('#ReportType').change(function() {
@@ -245,6 +265,14 @@ $(document).on("pageshow","#ReportDetails",function(){
 			}
   		}
 
+  		if($('#ReportType').val() == ''){
+  			$("#typeval").text("Please select a report type...").show().addClass('valiActive');
+			Proceed = Proceed + 1;
+  		}
+  		else{
+			$("#typeval").fadeOut().removeClass('valiActive');
+		}
+
   		if($('#info').val() == ''){
   			$("#infoval").text("Please enter additional information...").show().addClass('valiActive');
   			Proceed = Proceed + 1;
@@ -319,6 +347,8 @@ function replacespecial(string){
 //Details Page
 $(document).on("pageshow","#ReportReview",function(){
 	//$(document).ready(loading);
+	loading();
+	
 	var html = '';
 
 	DataTempArray = JSON.parse(localStorage.DataTemp);
@@ -326,6 +356,7 @@ $(document).on("pageshow","#ReportReview",function(){
 	html += '<tr><td>Type: </td><td>'+ DataTempArray[0].ReportType +'</td></tr>';
 	//html += '<tr><td>Source: </td><td>'+ replacespecial(Source) +'</td></tr>';
 
+	alert(DataTempArray[0].Source);
 	if(DataTempArray[0].Source == 'not checked'){
 		html += '<tr><td>Full Name: </td><td>'+ DataTempArray[0].FullName +'</td></tr>';
 		html += '<tr><td>Phone #: </td><td>'+ DataTempArray[0].PhoneNum +'</td></tr>';
@@ -344,7 +375,7 @@ $(document).on("pageshow","#ReportReview",function(){
 	html += '<tr><td>Location: </td><td>'+ DataTempArray[0].Place +'</td></tr>';
 	html += '<tr><td>Add Info: </td><td>'+ DataTempArray[0].Info +'</td></tr>';
 
-	//$('#overlay').remove();
+	$('#overlay').remove();
 
 	$('#ReviewTable').html(html);
 	$('#BackToDetails').attr('href', 'ReportDetails.html?back=1');
@@ -423,9 +454,13 @@ $(document).on("pageshow","#HomePage",function(){
 	    if (localStorage.MyCrimeReports) {
 	    	var locz = localStorage.MyCrimeReports;
 	    	var myCrimeReports = JSON.parse(locz);
+	    	var x = myCrimeReports.length;
+	    	//alert(myCrimeReports.length);
+	    	//$('.MyReportHeader').append('('+myCrimeReports.length+')');
 	    	if(myCrimeReports.length > 0){
 	    		for(var i = 0 ; i < myCrimeReports.length; i++){
-		    		html += '<li><a href="MyReport.html?id='+myCrimeReports[i].ReportId+'" class="ui-btn ui-btn-icon-right ui-icon-carat-r">'+ myCrimeReports[i].ReportType +'</a></li>';
+	    			x = x - 1;
+		    		html += '<li><a href="MyReport.html?id='+myCrimeReports[x].ReportId+'" class="ui-btn ui-btn-icon-right ui-icon-carat-r">'+ myCrimeReports[x].ReportType +'</a></li>';
 		    	}
 		    	$('.MyReportList').html(html);
 		    	$('.NoReports').hide();
@@ -451,6 +486,8 @@ $(document).on("pageshow","#HomePage",function(){
 
 $(document).on("pageshow","#MyReport",function(){
 
+	loading();
+
 	ReportId = getQueryVariable('id');
 
 	myCrimeReports = JSON.parse(localStorage.MyCrimeReports);
@@ -458,6 +495,7 @@ $(document).on("pageshow","#MyReport",function(){
 	if(myCrimeReports[ReportId].Img != ''){
 		$('.ReportImg').show();
 		$('#myImage').attr('src','data:image/jpeg;base64,' + myCrimeReports[ReportId].Img);
+		$('#myImagePopUp').attr('src','data:image/jpeg;base64,' + myCrimeReports[ReportId].Img);
 	}
 
 	$('.ReportType').append('<b>' + myCrimeReports[ReportId].ReportType + '</b>');
@@ -468,5 +506,7 @@ $(document).on("pageshow","#MyReport",function(){
 	// $('.phonenum').append(myCrimeReports[ReportId].PhoneNum + '</b>');
 	// $('.email').append(myCrimeReports[ReportId].Email + '</b>');
 	$('.WhenDate').append('<b>' + myCrimeReports[ReportId].WhenDate + '</b>');
+
+	$('#overlay').remove();
 	
 });

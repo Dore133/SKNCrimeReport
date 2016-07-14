@@ -28,29 +28,28 @@
         </div>
 
         <div data-role="header">
-            <!-- <a href="#HomePage" data-transition="flip" class="ui-btn ui-nodisc-icon ui-corner-all ui-shadow ui-icon-home ui-btn-icon-notext">Home</a> -->
-            <a href="#HomePage" data-transition="flip" class="homebtn ui-btn ui-shadow ui-corner-all"> <img src="img/Events$Coat_of_Arms.png" width="20" height="20"></a>
+            <a href="#HomePage" data-transition="flip" class="homebtn"><IMG SRC="img/Events$Coat_of_Arms.png" width="37"></a>
             <h1 class="AppHeader">SKN Crime Report</h1>
-            <a href="#myPanel" class="ui-btn ui-nodisc-icon ui-corner-all ui-icon-bars ui-shadow ui-btn-icon-notext">Menu</a>
+            <a href="#myPanel" class="ui-btn ui-corner-all mymenubtn ui-icon-bars ui-shadow ui-btn-icon-left"></a>
+        </div>
+
+        <div class="VidCon">
+            <!-- <img src="img/crime.png" width="100%" height="100%"> -->
         </div>
 
         <div data-role="main" class="ui-content">
-            <div class="VidCon">
-
-            </div>
-
-            <h2>My Reports</h2>
-            <ol class="MyReportList" data-role="listview" data-inset="true">
+            <h2 class="MyReportHeader">My Reports</h2>
+            <ol class="MyReportList" data-role="listview" data-inset="false">
                 <!-- <li><a href="">Report</a></li>
                 <li><a href="">Report</a></li>
                 <li><a href="">Report</a></li>
                 <li><a href="">Report</a></li> -->
             </ol>
             <h3 class="NoReports">No Reports</h3>
-
-            <div style="float:left;width:100%;">
-                <a href="ReportDetails.html" style="margin: 0 auto;" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext">Submit Report</a>
-                <a id="ClearReports" style="margin: 0 auto;" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext">Clear All</a>
+            
+            <div style="float:left;width:100%;text-align: center;">
+                <a id="AddReport" href="ReportDetails.html" class="ui-btn-inline ui-nodisc-icon ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext">Submit Report</a>
+                <!-- <a id="ClearReports" class="ui-btn-inline ui-nodisc-icon ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext">Clear All</a> -->
             </div>
         </div>
 

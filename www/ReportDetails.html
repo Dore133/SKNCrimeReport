@@ -27,28 +27,32 @@
         </div>
 
         <div data-role="header">
-            <!-- <a href="#HomePage" data-transition="flip" class="ui-btn ui-nodisc-icon ui-corner-all ui-shadow ui-icon-home ui-btn-icon-notext">Home</a> -->
-            <a href="#HomePage" data-transition="flip" class="homebtn ui-btn ui-shadow ui-corner-all"> <img src="img/Events$Coat_of_Arms.png" width="20" height="20"></a>
+            <a href="#HomePage" data-transition="flip" class="homebtn"><IMG SRC="img/Events$Coat_of_Arms.png" width="37"></a>
             <h1 class="AppHeader">SKN Crime Report</h1>
-            <a href="#myPanel" class="ui-btn ui-nodisc-icon ui-corner-all ui-icon-bars ui-shadow ui-btn-icon-notext">Menu</a>
+            <a href="#myPanel" class="ui-btn ui-corner-all mymenubtn ui-icon-bars ui-shadow ui-btn-icon-left"></a>
         </div>
 
         <div data-role="main" class="ui-content">
+            <a class="ui-btn ui-btn-b" data-rel="back">Go Back</a>
             <form id="ReportForm" method="get" action="ReportReview.html">
                 <fieldset class="ui-field-contain" data-type="vertical">
                     <div class="What">
-                        <select name="ReportType" id="ReportType" data-native-menu="false" required>
+                        <select name="ReportType" id="ReportType" data-native-menu="false">
                             <option value="">Select Report Type</option>
                             <option value="Future Crime">Future Crime</option>
                             <option value="Active Crime">Active Crime</option>
                             <option value="Past Crime">Past Crime</option>
                             <option value="Tip">Tip</option>
                         </select>
+                        <span class="vali" id="typeval"></span>
                         <div class="Photosec">
                             <a id="UploadImg" class="ui-btn-inlinez ui-btn ui-icon-camera ui-btn-icon-left">Take Photo</a>
                             <a id="ChooseImg" class="ui-btn-inlinez ui-btn ui-icon-grid ui-btn-icon-left">Photo Gallery</a>
                         </div>
-                        <div class="ReportImg"><img id="myImage" src="" width="80%" height="100"></div>
+                        <div class="ReportImg">
+                            <img id="myImage" src="" width="100%" height="100">
+                            <a id="ClearPhoto" class="ui-btn-inline ui-nodisc-icon ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext">Remove Photo</a>
+                        </div>
                         <label for="Source">Send Report Anonymous?</label>
                         <input type="checkbox" data-role="flipswitch" name="Source" id="Source" data-on-text="Yes" data-off-text="No" checked>
                     </div>
