@@ -44,8 +44,10 @@
                             <option value="Past Crime">Past Crime</option>
                             <option value="Tip">Tip</option>
                         </select>
-                        <a id="UploadImg" class="ui-btn-inline ui-btn ui-icon-camera ui-btn-icon-left">Take Photo</a>
-                        <a id="ChooseImg" class="ui-btn-inline ui-btn ui-icon-grid ui-btn-icon-left">Photo Gallery</a>
+                        <div class="Photosec">
+                            <a id="UploadImg" class="ui-btn-inlinez ui-btn ui-icon-camera ui-btn-icon-left">Take Photo</a>
+                            <a id="ChooseImg" class="ui-btn-inlinez ui-btn ui-icon-grid ui-btn-icon-left">Photo Gallery</a>
+                        </div>
                         <div class="ReportImg"><img id="myImage" src="" width="80%" height="100"></div>
                         <label for="Source">Send Report Anonymous?</label>
                         <input type="checkbox" data-role="flipswitch" name="Source" id="Source" data-on-text="Yes" data-off-text="No" checked>
@@ -66,6 +68,7 @@
                         <label for="WhenDate">When:</label>
                         <input type="date" name="WhenDate" id="WhenDate">
                         <span class="vali" id="dateval"></span>
+                        <span class="vali" id="datefval"></span>
                     </div>
                     <div class="Who">
                         <label for="Alias">Who is invloved:</label>

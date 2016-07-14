@@ -178,8 +178,9 @@ $(document).on("pageshow","#ReportDetails",function(){
 	$("#ReportForm").submit(function() {
 		//alert('submit');
 		var Proceed = 0;
+		//If Anonymous flipswitch is off
 		if($('#Source').is(':checked') == false){
-  			//alert('Validation source not check');
+  			//If full name is empty
   			if ($("#fullname").val() == "") {
 				$("#nameval").text("Please enter your name...").show().addClass('valiActive');
 				Proceed = Proceed + 1;
@@ -187,15 +188,24 @@ $(document).on("pageshow","#ReportDetails",function(){
 			else{
 				$("#nameval").fadeOut().removeClass('valiActive');
 			}
+			//if phone number is empty
+			// if ($("#phonenum").val() == "") {
+			// 	$("#phoneval").text("Please enter your phone number...").show().addClass('valiActive');
+			// 	Proceed = Proceed + 1;
+			// }
+			// else{
+			// 	$("#phoneval").fadeOut().removeClass('valiActive');
+			// }
 
-			if ($("#phonenum").val() == "") {
-				$("#phoneval").text("Please enter your phone number...").show().addClass('valiActive');
+			//if phone number length is less than 7
+			if ($("#phonenum").val().length < 7) {
+				$("#phoneval").text("Please enter a valid phone number...").show().addClass('valiActive');
 				Proceed = Proceed + 1;
 			}
 			else{
 				$("#phoneval").fadeOut().removeClass('valiActive');
 			}
-
+			//if email is empty
 			if ($("#email").val() == "") {
 				$("#emailval").text("Please enter your email address...").show().addClass('valiActive');
 				Proceed = Proceed + 1;
@@ -207,7 +217,27 @@ $(document).on("pageshow","#ReportDetails",function(){
 
   		if($('#ReportType').val() != 'Active Crime'){
   			if ($("#WhenDate").val() == "") {
-				$("#dateval").text("Please when this crime occured...").show().addClass('valiActive');
+				$("#dateval").text("Please enter when this crime occured...").show().addClass('valiActive');
+				Proceed = Proceed + 1;
+			}
+			else{
+				$("#dateval").fadeOut().removeClass('valiActive');
+			}
+  		}
+
+  		if($('#ReportType').val() == 'Future Crime'){
+  			if ($("#WhenDate").val() <= formatDate(new Date())) {
+				$("#dateval").text("Date must be a future date...").show().addClass('valiActive');
+				Proceed = Proceed + 1;
+			}
+			else{
+				$("#dateval").fadeOut().removeClass('valiActive');
+			}
+  		}
+
+  		if($('#ReportType').val() == 'Past Crime'){
+  			if ($("#WhenDate").val() >= formatDate(new Date())) {
+				$("#dateval").text("Date must be a past date...").show().addClass('valiActive');
 				Proceed = Proceed + 1;
 			}
 			else{
@@ -255,6 +285,13 @@ $(document).on("pagebeforehide","#ReportDetails",function(){
 		var sourcechecked = 'not checked';
 	}
 
+	if($('#ReportType').val() == 'Active Crime'){
+		var DateInput =formatDate(new Date());
+	}
+	else{
+		var DateInput = $('#WhenDate').val();
+	}
+
     var DataTempObj = {
 			ReportType: $('#ReportType').val(),
 			Source: sourcechecked,
@@ -264,7 +301,7 @@ $(document).on("pagebeforehide","#ReportDetails",function(){
 			FullName: $('#fullname').val(),
 			PhoneNum: $('#phonenum').val(),
 			Email: $('#email').val(),
-			WhenDate: $('#WhenDate').val()
+			WhenDate: DateInput
 		};
 
 	DataTempArray.push(DataTempObj);
@@ -407,6 +444,7 @@ $(document).on("pageshow","#HomePage",function(){
 
 	$('#ClearReports').bind( 'click', function(event, ui) {
 		localStorage.clear();
+		$('.MyReportList').html('');
 	});
 	
 });
