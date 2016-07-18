@@ -19,9 +19,14 @@
 
 <body>
     <div data-role="page" id="ReportReview">
-        <!-- <div data-role="header">
-            <h1>Report Review</h1>
-        </div> -->
+        <div data-role="panel" id="myPanel" data-swipe-close="true" data-display="overlay" data-position="right"  data-position-fixed="true">
+            <div class="LogoPanel"><img src="img/Events$Coat_of_Arms.png" width="100%" height="150"></div>
+            <ul data-role="listview" class="PanelItems">
+                <li><a href="#HomePage" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Home</a></li>
+                <li><a href="ReportDetails.html" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Submit Report</a></li>
+            </ul>
+        </div>
+        
         <div data-role="header">
             <a href="#HomePage" data-transition="flip" class="homebtn"><IMG SRC="img/Events$Coat_of_Arms.png" width="37"></a>
             <h1 class="AppHeader">SKN Crime Report</h1>

@@ -38,21 +38,21 @@ function formatDate(date) {
 //Menu Items
 $(document).on("pageshow",function(){
 	//alert('page show');
-	var ActivePageN = $.mobile.activePage.attr('id');
+	// var ActivePageN = $.mobile.activePage.attr('id');
 
-	//alert(Menuto);
-	if($( "#"+ActivePageN+" .PanelItems" ).has( "li" ).length == 0){
-		//alert('no item');
-		var MenuItems = null;
+	// //alert(Menuto);
+	// if($( "#"+ActivePageN+" .PanelItems" ).has( "li" ).length == 0){
+	// 	//alert('no item');
+	// 	var MenuItems = null;
 
-		MenuItems = '<li><a href="#HomePage" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Home</a></li>';
-		MenuItems = MenuItems + '<li><a href="ReportDetails.html" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Submit Report</a></li>';
+	// 	MenuItems = '<li><a href="#HomePage" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Home</a></li>';
+	// 	MenuItems = MenuItems + '<li><a href="ReportDetails.html" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Submit Report</a></li>';
     
-		$( "#"+ActivePageN+" .PanelItems" ).append(MenuItems);
-	}
-	else{
-		//alert($( ".PanelItems" ).html());
-	}
+	// 	$( "#"+ActivePageN+" .PanelItems" ).append(MenuItems);
+	// }
+	// else{
+	// 	//alert($( ".PanelItems" ).html());
+	// }
 
 	$( "#"+ActivePageN+" .MyFooter h1" ).html("Copyright gov.kn 2016 &copy;");
 
