@@ -52,6 +52,7 @@ ul.PanelItems li {
     padding: 0px!important;
     background-color: transparent !important;
     border: none !important;
+    box-shadow: 0 -1px 3px rgba(0,0,0,.15);
 }
 
 .myhomebtn:after {
