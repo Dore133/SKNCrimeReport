@@ -38,7 +38,7 @@ function formatDate(date) {
 //Menu Items
 $(document).on("pageshow",function(){
 	//alert('page show');
-	// var ActivePageN = $.mobile.activePage.attr('id');
+	var ActivePageN = $.mobile.activePage.attr('id');
 
 	// //alert(Menuto);
 	// if($( "#"+ActivePageN+" .PanelItems" ).has( "li" ).length == 0){
