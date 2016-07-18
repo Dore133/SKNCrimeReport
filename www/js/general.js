@@ -356,7 +356,7 @@ $(document).on("pageshow","#ReportReview",function(){
 	html += '<tr><td>Type: </td><td>'+ DataTempArray[0].ReportType +'</td></tr>';
 	//html += '<tr><td>Source: </td><td>'+ replacespecial(Source) +'</td></tr>';
 
-	alert(DataTempArray[0].Source);
+	//alert(DataTempArray[0].Source);
 	if(DataTempArray[0].Source == 'not checked'){
 		html += '<tr><td>Full Name: </td><td>'+ DataTempArray[0].FullName +'</td></tr>';
 		html += '<tr><td>Phone #: </td><td>'+ DataTempArray[0].PhoneNum +'</td></tr>';
