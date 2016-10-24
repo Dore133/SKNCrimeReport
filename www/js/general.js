@@ -40,19 +40,19 @@ $(document).on("pageshow",function(){
 	//alert('page show');
 	var ActivePageN = $.mobile.activePage.attr('id');
 
-	// //alert(Menuto);
-	// if($( "#"+ActivePageN+" .PanelItems" ).has( "li" ).length == 0){
-	// 	//alert('no item');
-	// 	var MenuItems = null;
+	//alert(Menuto);
+	if($( "#"+ActivePageN+" .PanelItems" ).has( "li" ).length == 0){
+		//alert('no item');
+		var MenuItems = null;
 
-	// 	MenuItems = '<li><a href="#HomePage" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Home</a></li>';
-	// 	MenuItems = MenuItems + '<li><a href="ReportDetails.html" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Submit Report</a></li>';
+		MenuItems = '<li><a href="#HomePage" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Home</a></li>';
+		MenuItems = MenuItems + '<li><a href="ReportDetails.html" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Submit Report</a></li>';
     
-	// 	$( "#"+ActivePageN+" .PanelItems" ).append(MenuItems);
-	// }
-	// else{
-	// 	//alert($( ".PanelItems" ).html());
-	// }
+		$( "#"+ActivePageN+" .PanelItems" ).append(MenuItems);
+	}
+	else{
+		//alert($( ".PanelItems" ).html());
+	}
 
 	$( "#"+ActivePageN+" .MyFooter h1" ).html("Copyright gov.kn 2016 &copy;");
 
@@ -71,6 +71,7 @@ $(document).on("pageshow","#ReportDetails",function(){
 		window.setTimeout(AddValues, 10);
 		
 		function AddValues(){
+			//Anonymous Switch
 			if(DataTempArray[0].Source == 'not checked'){
 				$('.ContactDetails').fadeIn();
 				sourceval = 'off';
@@ -84,6 +85,11 @@ $(document).on("pageshow","#ReportDetails",function(){
 				$('.When').fadeOut();
 			}
 
+			if(DataTempArray[0].Island == 'Nevis'){
+				$('.NvArea').fadeIn();
+				$('.SkArea').fadeOut();
+			}
+
 			if(localStorage.ImgTemp){
 				ImgTemp = JSON.parse(localStorage.ImgTemp);
 				$('.ReportImg').show();
@@ -94,7 +100,14 @@ $(document).on("pageshow","#ReportDetails",function(){
 			$('#ReportType-button span').text(DataTempArray[0].ReportType);
 			$('#Source').val(DataTempArray[0].Source);
 			$('#Alias').val(DataTempArray[0].Alias);
-			$('#Location').val(DataTempArray[0].Place);
+			$('#Island').val(DataTempArray[0].Island);
+			$('#Island-button span').text(DataTempArray[0].Island);
+
+			$('#SkLocation').val(DataTempArray[0].SkVillage);
+			$('#SkLocation-button span').text(DataTempArray[0].SkVillage);
+			$('#NvLocation').val(DataTempArray[0].NvVillage);
+			$('#NvLocation-button span').text(DataTempArray[0].NvVillage);
+
 			$('#info').val(DataTempArray[0].Info);
 			$('#fullname').val(DataTempArray[0].FullName);
 			$('#phonenum').val(DataTempArray[0].PhoneNum);
@@ -181,6 +194,20 @@ $(document).on("pageshow","#ReportDetails",function(){
   			$('.When').fadeIn();
   		}
 	});
+
+	//Show Respective Areas of Country
+	$('#Island').change(function() {
+		var type = $(this).val();
+  		if(type == 'Nevis'){
+  			$('.SkArea').fadeOut();
+  			$('.NvArea').fadeIn();
+  		}
+  		else{
+  			$('.SkArea').fadeIn();
+  			$('.NvArea').fadeOut();
+  		}
+	});
+	
 
 	//Show Contact Details
 	$('#Source').change(function() {
@@ -281,13 +308,25 @@ $(document).on("pageshow","#ReportDetails",function(){
 			$("#infoval").fadeOut().removeClass('valiActive');
 		}
 
-  		if($('#Location').val() == ''){
-  			$("#locval").text("Please enter the location of this crime...").show().addClass('valiActive');
-  			Proceed = Proceed + 1;
+  		if($('#Island').val() == 'St. Kitts'){
+  			if($('#SkLocation').val() == ''){
+  				$("#locval").text("Please choose the location of this crime...").show().addClass('valiActive');
+  				Proceed = Proceed + 1;
+  			}
+  			else{
+				$("#locval").fadeOut().removeClass('valiActive');
+			}
   		}
   		else{
-			$("#locval").fadeOut().removeClass('valiActive');
-		}
+  			if($('#NvLocation').val() == ''){
+  				$("#locval").text("Please choose the location of this crime...").show().addClass('valiActive');
+  				Proceed = Proceed + 1;
+  			}
+  			else{
+				$("#locval").fadeOut().removeClass('valiActive');
+			}
+  		}
+  		
 
 		if(Proceed == 0){
 			return true;
@@ -324,7 +363,9 @@ $(document).on("pagebeforehide","#ReportDetails",function(){
 			ReportType: $('#ReportType').val(),
 			Source: sourcechecked,
 			Alias: $('#Alias').val(),
-			Place: $('#Location').val(),
+			Island: $('#Island').val(),
+			SkVillage: $('#SkLocation').val(),
+			NvVillage: $('#NvLocation').val(),
 			Info: $('#info').val(),
 			FullName: $('#fullname').val(),
 			PhoneNum: $('#phonenum').val(),
@@ -363,16 +404,17 @@ $(document).on("pageshow","#ReportReview",function(){
 		html += '<tr><td>Email: </td><td>'+ DataTempArray[0].Email +'</td></tr>';
 	}
 
-	// if(replacespecial(ReportType) != 'Active Crime'){
-	// 	var WhenDate = getQueryVariable('WhenDate');
-	// }
-	// else{
-	// 	var WhenDate = formatDate(new Date());
-	// }
-
 	html += '<tr><td>When: </td><td>'+ DataTempArray[0].WhenDate +'</td></tr>';
 	html += '<tr><td>Alias: </td><td>'+ DataTempArray[0].Alias +'</td></tr>';
-	html += '<tr><td>Location: </td><td>'+ DataTempArray[0].Place +'</td></tr>';
+	html += '<tr><td>Island: </td><td>'+ DataTempArray[0].Island +'</td></tr>';
+
+	if(DataTempArray[0].Island == 'Nevis'){
+		html += '<tr><td>Village: </td><td>'+ DataTempArray[0].NvVillage +'</td></tr>';
+	}
+	else{
+		html += '<tr><td>Village: </td><td>'+ DataTempArray[0].SkVillage +'</td></tr>';
+	}
+
 	html += '<tr><td>Add Info: </td><td>'+ DataTempArray[0].Info +'</td></tr>';
 
 	$('#overlay').remove();
@@ -424,7 +466,9 @@ $(document).on("pageshow","#SubmitReport",function(){
 			ReportDate: formatDate(new Date()),
 			ReportType: DataTempArray[0].ReportType,
 			Alias: DataTempArray[0].Alias,
-			Place: DataTempArray[0].Place,
+			Island: DataTempArray[0].Island,
+			SkVillage: DataTempArray[0].SkVillage,
+			NvVillage: DataTempArray[0].NvVillage,
 			Info: DataTempArray[0].Info,
 			FullName: DataTempArray[0].FullName,
 			PhoneNum: DataTempArray[0].PhoneNum,
@@ -446,7 +490,7 @@ $(document).on("pageshow","#SubmitReport",function(){
 
 });
 
-$(document).on("pageshow","#HomePage",function(){
+/*$(document).on("pageshow","#HomePage",function(){
 
 	//Check if MyCrimeReports from local storage exist and Populate "My Reports Lists"
 	var html = '';
@@ -482,9 +526,9 @@ $(document).on("pageshow","#HomePage",function(){
 		$('.MyReportList').html('');
 	});
 	
-});
+});*/
 
-$(document).on("pageshow","#MyReport",function(){
+/*$(document).on("pageshow","#MyReport",function(){
 
 	loading();
 
@@ -500,7 +544,7 @@ $(document).on("pageshow","#MyReport",function(){
 
 	$('.ReportType').append('<b>' + myCrimeReports[ReportId].ReportType + '</b>');
 	$('.Alias').append('<b>' + myCrimeReports[ReportId].Alias + '</b>');
-	$('.Location').append('<b>' + myCrimeReports[ReportId].Place + '</b>');
+	$('.Island').append('<b>' + myCrimeReports[ReportId].Island + '</b>');
 	$('.Info').append('<b>' + myCrimeReports[ReportId].Info + '</b>');
 	// $('.fullname').append(myCrimeReports[ReportId].FullName + '</b>');
 	// $('.phonenum').append(myCrimeReports[ReportId].PhoneNum + '</b>');
@@ -509,4 +553,4 @@ $(document).on("pageshow","#MyReport",function(){
 
 	$('#overlay').remove();
 	
-});
+});*/

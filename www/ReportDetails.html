@@ -22,8 +22,7 @@
         <div data-role="panel" id="myPanel" data-swipe-close="true" data-display="overlay" data-position="right"  data-position-fixed="true">
             <div class="LogoPanel"><img src="img/Events$Coat_of_Arms.png" width="100%" height="150"></div>
             <ul data-role="listview" class="PanelItems">
-                <li><a href="#HomePage" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Home</a></li>
-                <li><a href="ReportDetails.html" data-transition="flip" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Submit Report</a></li>
+                <!-- Menu items goes here..-->
             </ul>
         </div>
 
@@ -76,9 +75,112 @@
                         <span class="vali" id="datefval"></span>
                     </div>
                     <div class="Who">
-                        <label for="Alias">Who is invloved:</label>
+                        <label for="Alias">Who is involved:</label>
                         <input type="text" name="Alias" id="Alias" placeholder="Alias..">
-                        <input type="text" name="Location" id="Location" placeholder="Location..">
+                        <!-- <input type="text" name="Location" id="Location" placeholder="Location.."> -->
+                        <label for="Island">Island</label>
+                        <select name="Island" id="Island" data-native-menu="false"> 
+                            <option value="St. Kitts">St. Kitts</option>
+                            <option value="Nevis">Nevis</option>
+                        </select>
+                        <label>Village</label>
+                        <div class="SkArea">
+                            <select name="SkLocation" id="SkLocation">
+                                <option value="">Select Area...</option>
+                                <option value="Basseterre">Basseterre</option>
+                                <option value="Belle Vue">Belle Vue</option>
+                                <option value="Bird Rock">Bird Rock</option>
+                                <option value="Borryeaux">Borryeaux</option>
+                                <option value="Boyds">Boyds</option>
+                                <option value="Britons Estate">Britons Estate</option>
+                                <option value="Camps">Camps</option>
+                                <option value="Canada Estate">Canada Estate</option>
+                                <option value="Cayon">Cayon</option>
+                                <option value="Christ Church">Christ Church</option>
+                                <option value="Conaree">Conaree</option>
+                                <option value="Conaree Beach">Conaree Beach</option>
+                                <option value="Conyers">Conyers</option>
+                                <option value="Dieppe Bay">Dieppe Bay</option>
+                                <option value="Estridge">Estridge</option>
+                                <option value="Fig Tree">Fig Tree</option>
+                                <option value="Frigate Bay">Frigate Bay</option>
+                                <option value="Godwin Ghaut">Godwin Ghaut</option>
+                                <option value="Half Moon">Half Moon</option>
+                                <option value="Half Way Tree">Half Way Tree</option>
+                                <option value="Harris'">Harris'</option>
+                                <option value="Keys">Keys</option>
+                                <option value="La Valley">La Valley</option>
+                                <option value="Lamberts">Lamberts</option>
+                                <option value="Lodge">Lodge</option>
+                                <option value="Lynches">Lynches</option>
+                                <option value="Mansion">Mansion</option>
+                                <option value="Matingly Heights">Matingly Heights</option>
+                                <option value="Middle Island">Middle Island</option>
+                                <option value="Molyneaux">Molyneaux</option>
+                                <option value="New Guinea">New Guinea</option>
+                                <option value="Newton Ground">Newton Ground</option>
+                                <option value="Old Road">Old Road</option>
+                                <option value="Ottleys">Ottleys</option>
+                                <option value="Palmetto Points">Palmetto Points</option>
+                                <option value="Parson Ground">Parson Ground</option>
+                                <option value="Philips' Village">Philips' Village</option>
+                                <option value="Pogson">Pogson</option>
+                                <option value="Saddlers">Saddlers</option>
+                                <option value="Sandy Point">Sandy Point</option>
+                                <option value="Shadwell Housing">Shadwell Housing</option>
+                                <option value="South East Pennisula">South East Pennisula</option>
+                                <option value="St. Pauls">St. Pauls</option>
+                                <option value="St. Peters">St. Peters</option>
+                                <option value="Tabernacle">Tabernacle</option>
+                                <option value="Verchilds">Verchilds</option>
+                                <option value="West Farm">West Farm</option>
+                            </select>
+                        </div>
+                        <div class="NvArea">
+                            <select name="NvLocation" id="NvLocation">
+                                <option value="">Select Area...</option>
+                                <option value="Bath">Bath</option>
+                                <option value="Brick Kiln">Brick Kiln</option>
+                                <option value="Brown Hill">Brown Hill</option>
+                                <option value="Brown's Pasture">Brown's Pasture</option>
+                                <option value="Buck's Hill">Buck's Hill</option>
+                                <option value="Burnaby">Burnaby</option>
+                                <option value="Barnes Ghaut">Barnes Ghaut</option> 
+                                <option value="Bush Hill">Bush Hill</option>
+                                <option value="Butlers">Butlers</option>
+                                <option value="Camps">Camps</option>
+                                <option value="Chicken Stone">Chicken Stone</option>
+                                <option value="Church Ground">Church Ground</option>
+                                <option value="Cole Hill">Cole Hill</option>
+                                <option value="Craddocks">Craddocks</option>
+                                <option value="Crook's Ground">Crook's Ground</option>
+                                <option value="Eden Browne">Eden Browne</option>
+                                <option value="Fenton Hill">Fenton Hill</option>
+                                <option value="Fountain">Fountain</option>
+                                <option value="Harris">Harris</option>
+                                <option value="Holmes Hill">Holmes Hill</option>
+                                <option value="Hull Ground Rawlins">Hull Ground Rawlins</option>
+                                <option value="Jessup">Jessup</option>
+                                <option value="Mt. Lily">Mt. Lily</option>
+                                <option value="New River">New River</option>
+                                <option value="Pembroke">Pembroke</option>
+                                <option value="Rawlins">Rawlins</option>
+                                <option value="Rices">Rices</option>
+                                <option value="Rick's">Rick's</option>
+                                <option value="Scarborough">Scarborough</option>
+                                <option value="Sheriffs">Sheriffs</option>
+                                <option value="Spring Hall">Spring Hall</option>
+                                <option value="St. Peter's Hill">St. Peter's Hill</option>
+                                <option value="Stony Hill">Stony Hill</option>
+                                <option value="Stuart's">Stuart's</option>
+                                <option value="Talyors Pasture">Talyors Pasture</option>
+                                <option value="Webb's Ground">Webb's Ground</option>
+                                <option value="West Bury">West Bury</option>
+                                <option value="White Hall">White Hall</option>
+                                <option value="Zetlands">Zetlands</option>
+                                <option value="Zion">Zion</option>
+                            </select>
+                        </div>
                         <span class="vali" id="locval"></span>
                     </div>
 
