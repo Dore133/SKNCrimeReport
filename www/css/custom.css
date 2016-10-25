@@ -52,7 +52,6 @@ ul.PanelItems li {
     padding: 0px!important;
     background-color: transparent !important;
     border: none !important;
-    box-shadow: 0 -1px 3px rgba(0,0,0,.15);
 }
 
 .myhomebtn:after {
@@ -256,4 +255,21 @@ ul.PanelItems li {
 
 #ClearPhoto:after{
     background-size: 10px;
+}
+
+.Disclaimer{
+    float: left;
+    border: 1px solid #ddd;
+    background: #eee;
+    padding: 10px;
+    color: #666;
+}
+
+.Disclaimer h2{
+    margin: 5px 0px;
+    color: #2370dc;
+}
+
+.NvArea{
+    display: none;
 }
