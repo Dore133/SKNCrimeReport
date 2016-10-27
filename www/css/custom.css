@@ -52,6 +52,7 @@ ul.PanelItems li {
     padding: 0px!important;
     background-color: transparent !important;
     border: none !important;
+    box-shadow: none;   
 }
 
 .myhomebtn:after {
@@ -208,6 +209,8 @@ ul.PanelItems li {
 
 .ReportImg img{
     margin: 0 auto;
+    height: auto;
+    max-height: 300px;
 }
 
 #info{

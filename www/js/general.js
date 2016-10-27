@@ -172,6 +172,25 @@ $(document).on("pageshow","#ReportDetails",function(){
 	    }
 	});
 
+	$('#ChooseVideo').bind( 'click', function(event, ui) {
+		// capture callback
+		var captureSuccess = function(mediaFiles) {
+		    var i, path, len;
+		    for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+		        path = mediaFiles[i].fullPath;
+		        // do something interesting with the file
+		    }
+		};
+
+		// capture error callback
+		var captureError = function(error) {
+		    console.log('Video Failed Error code: ' + error.code );
+		};
+
+		// start video capture
+		navigator.device.capture.captureVideo(captureSuccess, captureError, {limit:2});
+	});
+
 	//Remove Photo from que
 	$('#ClearPhoto').bind( 'click', function(event, ui) {
 		//Remove Img Path from local storage
@@ -405,7 +424,11 @@ $(document).on("pageshow","#ReportReview",function(){
 	}
 
 	html += '<tr><td>When: </td><td>'+ DataTempArray[0].WhenDate +'</td></tr>';
-	html += '<tr><td>Alias: </td><td>'+ DataTempArray[0].Alias +'</td></tr>';
+
+	if(DataTempArray[0].Alias != ''){
+		html += '<tr><td>Alias: </td><td>'+ DataTempArray[0].Alias +'</td></tr>';
+	}
+	
 	html += '<tr><td>Island: </td><td>'+ DataTempArray[0].Island +'</td></tr>';
 
 	if(DataTempArray[0].Island == 'Nevis'){
