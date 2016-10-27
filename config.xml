@@ -29,6 +29,7 @@
   <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.0"/>
   <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1"/>
   <icon src="icon.png"/>
+  <splash src="splash.png" />
   <platform name="android">
     <icon src="res/icon/android/crimereporting-ldpi-icon.png" density="ldpi"/>
     <icon src="res/icon/android/crimereporting-mdpi-icon.png" density="mdpi"/>
@@ -99,6 +100,17 @@
     <icon src="www/res/icon/windows/Wide310x150Logo.scale-240.png" platform="windows" width="744" height="360"/>
     <splash src="www/res/screen/windows/SplashScreenPhone.scale-240.png" platform="windows" width="1152" height="1920"/> -->
   </platform>
+  <preference name="SplashScreen" value="screen" />
+  <preference name="SplashScreenDelay" value="5000" />
+  <preference name="SplashScreenBackgroundColor" value="#F43431" />
+  <preference name="ShowSplashScreenSpinner" value="false"/>
+  <preference name="FadeSplashScreen" value="true"/>
+  <preference name="FadeSplashScreenDuration" value="250"/>
+  <!-- <preference name="FadeSplashScreenDuration" value="250"/>
+  <preference name="SplashScreenWidth" value="100%" /> 
+  <preference name="SplashScreenHeight" value="100%" /> -->
+  <preference name="SplashMaintainAspectRatio" value="true" />
+  <preference name="SplashShowOnlyFirstTime" value="false" />
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
