@@ -138,7 +138,7 @@ $(document).on("pageshow","#ReportDetails",function(){
 	//Take a photo with camera
 	$('#UploadImg').bind( 'click', function(event, ui) {
   		
-  		navigator.camera.getPicture(onSuccess, onFail, { quality: 100, destinationType: Camera.DestinationType.FILE_URI, correctOrientation: true });
+  		navigator.camera.getPicture(onSuccess, onFail, { quality: 100, destinationType: Camera.DestinationType.DATA_URL, correctOrientation: true });
   		//Camera.DestinationType.DATA_URL base64
   		//Camera.DestinationType.FILE_URI imgpath
 	    function onSuccess(imageData) {
@@ -156,7 +156,7 @@ $(document).on("pageshow","#ReportDetails",function(){
 
 			localStorage.ImgTemp = JSON.stringify(ImgTempArray);
 	        //image.src = "data:image/jpeg;base64," + imageData;
-	        image.src = imageData;
+	        image.src = 'data:image/png;base64,' + imageData;
 	        $('.ReportImg').show();
 	        $('.ReportImg video').hide();
 		    $('.ReportImg img').show();
@@ -172,7 +172,7 @@ $(document).on("pageshow","#ReportDetails",function(){
 		
 		navigator.camera.getPicture(onSuccess, onFail, { 
 			quality: 100, destinationType: Camera.DestinationType.FILE_URI, 
-			mediaType: mediaType.ALLMEDIA,
+			mediaType: mediaType.PICTURE,
 			sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
 			correctOrientation: true
 		});
@@ -186,45 +186,24 @@ $(document).on("pageshow","#ReportDetails",function(){
 
 	        var ImgFileType = ['jpg','jpeg','png','gif','bmp','tiff'];
 
-			//alert('extension : '+ extension);
-			if ( ImgFileType.indexOf( extension ) == -1 ) { 
-			   var video = $('#myVideo source');
+			var image = document.getElementById('myImage');
 
-				//Save Img Path to local storage
-		        var VideoTempArray = [];
+			//Save Img Path to local storage
+	        var ImgTempArray = [];
 
-		        var VideoTempObj = {
-						VideoPath: imageData
-					};
+	        var ImgTempObj = {
+					ImgPath: imageData
+				};
 
-				VideoTempArray.push(VideoTempObj);
+			ImgTempArray.push(ImgTempObj);
 
-			    localStorage.VideoTemp = JSON.stringify(VideoTempArray);
-			    video.attr('src', imageData);
-			    $('.ReportImg').show();
-			    $('.ReportImg video').show();
-			    $('.ReportImg img').hide();
-			}
-			else{
-				var image = document.getElementById('myImage');
-
-				//Save Img Path to local storage
-		        var ImgTempArray = [];
-
-		        var ImgTempObj = {
-						ImgPath: imageData
-					};
-
-				ImgTempArray.push(ImgTempObj);
-
-				localStorage.ImgTemp = JSON.stringify(ImgTempArray);
-				
-		        image.src = imageData;
-		        $('.ReportImg').show();
-		        $('.ReportImg img').show();
-		        $('.ReportImg video').hide();
-			}
+			localStorage.ImgTemp = JSON.stringify(ImgTempArray);
 			
+	        image.src = 'data:image/png;base64,' + imageData;
+	        $('.ReportImg').show();
+	        $('.ReportImg img').show();
+	        $('.ReportImg video').hide();
+
 	    }
 
 	    function onFail(message) {
@@ -528,6 +507,16 @@ $(document).on("pageshow","#ReportDetails",function(){
 			}
   		}
 
+  		if($('#ReportType').val() == 'Traffic Accident'){
+  			if ($("#WhenDate").val() > formatDate(new Date())) {
+				$("#dateval").text("Date CANNOT be a future date...").show().addClass('valiActive');
+				Proceed = Proceed + 1;
+			}
+			else{
+				$("#dateval").fadeOut().removeClass('valiActive');
+			}
+  		}
+
   		if($('#ReportType').val() == ''){
   			$("#typeval").text("Please select a report type...").show().addClass('valiActive');
 			Proceed = Proceed + 1;
@@ -662,13 +651,11 @@ $(document).on("pageshow","#ReportReview",function(){
 
 	$('#ReviewTable').html(html);
 	$('#BackToDetails').attr('href', 'ReportDetails.html?back=1');
-	//$('#SubmitReport').attr('href', 'SubmitReport.html');
 	
 	$('#SubmitReport').bind( 'click', function(event, ui) {
 		loading();
 		
-		var GeoLocation = 'false',
-			CRObjz = 'false',
+		var CRObjz = 'false',
 			Proceed = 0;
 
 		document.addEventListener("deviceready", onDeviceReady, false);
@@ -680,236 +667,96 @@ $(document).on("pageshow","#ReportReview",function(){
 		    //console.log('deviceready review page');
 		}
 
-		//Call Functions
-		GetLocation();
-		SendReport();
+		SubmitCrimeReport();
 
-	    function GetLocation(){
-	    	//console.log('GetLocation function');
-	    	// current GPS coordinates
-		    var onGeoSuccess = function(position) {
-		        //alert('Latitude: '+ position.coords.latitude+ '\n' + 'Longitude: '+ position.coords.longitude+ '\n' +'Accuracy: '+ position.coords.accuracy+ '\n' );
-		        
-		        //Save Image link to show Co-Ordinate on a map
-		        var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +
-		                position.coords.longitude + "&zoom=15&size=640x640&markers=color:red|label:X|" +
-		                position.coords.latitude + ',' + position.coords.longitude;
-
-		        //Run Function to save Co Ordinates
-		        SaveCoOrdinates(position.coords.latitude,position.coords.longitude,position.coords.accuracy,image_url,1);
-		    };
-
-		    // onError Callback receives a PositionError object
-		    function onError(error, PositionError) {
-		        //console.log('Error from GeoLocation');
-		        console.log('code: '+ error.code    + '\n' +'message: ' + error.message + '\n' );
-
-		        switch(error.code){
-		            case error.PERMISSION_DENIED: console.log("user did not share geolocation data");
-		            var Erroz = 'PERMISSION_DENIED';
-		            break;
-
-		            case error.POSITION_UNAVAILABLE: console.log("could not detect current position");
-		            var Erroz = 'POSITION_UNAVAILABLE';
-		            break;
-
-		            case error.TIMEOUT: console.log("retrieving position timed out");
-		            var Erroz = 'TIMEOUT';
-		            break;
-
-		            default: console.log("unknown error");
-		            var Erroz = 'unknown error';
-		            break;
-		        }
-		        //Run Function to save Co Ordinates
-		        SaveCoOrdinates(0,0,0,0,Erroz);
-		    }
-		    
-		    //Function to Save Co Ordinates
-		    function SaveCoOrdinates(latitude,longitude,accuracy,image,Dataz){
-		    	//console.log('SaveCoOrdinates function');
-		    	GeoLocation = 'true';
-
-		    	var GeoTempArray = [];
-
-		        if(Dataz == 1){
-		        	Dataz = 'All is Good';
-		        }
-
-		        var GeoTempObj = {
-		        		CoOrd: Dataz,
-						Latitude: latitude,
-						Longitude: longitude,
-						Accuracy: accuracy,
-						MapImg: image
-					};
-
-				GeoTempArray.push(GeoTempObj);
-
-			    localStorage.GeoTemp = JSON.stringify(GeoTempArray);
-			    //alert(JSON.stringify(GeoTempArray));
-			    SubmitCrimeReport(CRObjz, GeoLocation);
-		    }
-
-		    navigator.geolocation.getCurrentPosition(onGeoSuccess, onError,{ timeout: 5000, enableHighAccuracy: true });
-	    }
-
-	    function SendReport(){
-			CRObjz = 'true';
-			
-			//Check if the MyCrimeReports from local storage exist
-			if (localStorage.MyCrimeReports) {
-				CrimeReportArray = JSON.parse(localStorage.MyCrimeReports);
-				var RpIdz = CrimeReportArray.length;
-			}
-			else{
-				var CrimeReportArray = [];
-				var RpIdz = 0;
-			}
-
+		//Go to success page after details sent
+		function SubmitCrimeReport(){
 			DataTempArray = JSON.parse(localStorage.DataTemp);
-				
-			var html = '';
 
 			//Set Image url from storage to variable
-			/*if(localStorage.ImgTemp){
+			if(localStorage.ImgTemp){
 				ImgArray = JSON.parse(localStorage.ImgTemp);
 				ImgData = ImgArray[0].ImgPath;
 			}
 			else{
 				ImgData = '';
-			}*/
+			}
 
-			//Set Video url from storage to variable
-			/*if(localStorage.VideoTemp){
-				VideoArray = JSON.parse(localStorage.VideoTemp);
-				VideoData = VideoArray[0].VideoPath;
+			if(DataTempArray[0].Island == 'Nevis'){
+				TempCity = DataTempArray[0].NvVillage;
 			}
 			else{
-				VideoData = '';
-			}*/
-
-			var CRObj = {
-					ReportId: RpIdz,
-					ReportDate: formatDate(new Date()),
-					ReportType: DataTempArray[0].ReportType,
-					Alias: DataTempArray[0].Alias,
-					Island: DataTempArray[0].Island,
-					SkVillage: DataTempArray[0].SkVillage,
-					NvVillage: DataTempArray[0].NvVillage,
-					Street: DataTempArray[0].Street,
-					Info: DataTempArray[0].Info,
-					FullName: DataTempArray[0].FullName,
-					PhoneNum: DataTempArray[0].PhoneNum,
-					Email: DataTempArray[0].Email,
-					Source: DataTempArray[0].Source,
-					//Img: ImgData,
-					//Video: VideoData,
-					WhenDate: DataTempArray[0].WhenDate
-				};
-
-			CrimeReportArray.push(CRObj);
-
-			//Add to local storage and remove temp data
-			localStorage.MyCrimeReports = JSON.stringify(CrimeReportArray);
-
-			SubmitCrimeReport(CRObjz, GeoLocation);
-		}
-
-		//Go to HomePage after details sent
-		function SubmitCrimeReport(CRObjz, GeoLocation){
-			
-			Proceed = Proceed + 1;
-
-			if(Proceed == 2){
-				localStorage.removeItem('DataTemp');
-				localStorage.removeItem('ImgTemp');
-				localStorage.removeItem('VideoTemp');
-				localStorage.removeItem('MyCrimeReports');
-				localStorage.removeItem('GeoTemp');
-				$('#overlay').remove();
-				$.mobile.navigate( 'index.html' );
+				TempCity = DataTempArray[0].SkVillage;
 			}
+
+			if(DataTempArray[0].Source == 'not checked'){
+				TempSource = 'OFF';
+			}
+			else{
+				TempSource = 'ON';
+			}
+
+		    function makeid(){
+			    var text = "",
+			    	possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+			    	idlength = 5;
+
+			    for( var i=0; i < idlength; i++ ){
+			        text += possible.charAt(Math.floor(Math.random() * possible.length));
+		        }
+			    
+			    return text;
+			}
+
+			ReportIDz = makeid() + new Date().getTime();
+
+			//Code to submit report
+			var postreportdata = {
+				"async": true,
+				"crossDomain": true,
+				"url": "https://stkittsnevisegovernmentplatform-test.mendixcloud.com/rest/wsc_postcrimereportingdata/",
+				"method": "POST",
+				"data": {
+					"reportid": ReportIDz,
+					"entryType": DataTempArray[0].ReportType,
+					"suspect": DataTempArray[0].Alias,
+					"country": DataTempArray[0].Island,
+					"city": TempCity,
+					"address": DataTempArray[0].Street,
+					"notes": DataTempArray[0].Info,
+					"fullname": DataTempArray[0].FullName,
+					"phonenumber": DataTempArray[0].PhoneNum,
+					"email": DataTempArray[0].Email,
+					"anonymous": TempSource,
+					//"title": "iVBORw0KGgoAAAANSUhEUgAAAMwAAADiCAYAAAAChCi0AAAACXBIWXMAABcSAAAXEgFnn9JSAAA52WlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU0OTExLCAyMDEzLzEwLzI5LTExOjQ3OjE2ICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMTYtMDctMTVUMTE6MTk6NDMtMDQ6MDA8L3htcDpDcmVhdGVEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU",
+					"doc": DataTempArray[0].WhenDateSSS
+				},
+				"headers": {
+					"content-type": "application/x-www-form-urlencoded",
+					"cache-control": "no-cache"
+					//"postman-token": "ff4fa53c-bd50-fc25-cf52-656242377376"
+				}
+			}
+
+			//Check if Report submission was succesfull
+			$.ajax(postreportdata).done(function (response) {
+				console.log(response);
+				if(response == 'Success'){
+					localStorage.removeItem('DataTemp');
+					localStorage.removeItem('ImgTemp');
+					localStorage.removeItem('VideoTemp');
+					localStorage.removeItem('MyCrimeReports');
+					localStorage.removeItem('GeoTemp');
+					$('#overlay').remove();
+					$.mobile.navigate( 'ReportSuccess.html' );
+				}
+				else{
+					$('#overlay').remove();
+					alert('There was an error submitting the report. Please try again.')
+					//$.mobile.navigate( 'ReportDetails.html?back=1' );
+				}
+			});
+
 		}
 	});
 });
-
-//Details Page
-/*$(document).on("pageshow","#SubmitReport",function(){
-	$(document).ready(loading);
-	
-	alert('pageshow');
-
-
-	localStorage.removeItem('DataTemp');
-	localStorage.removeItem('ImgTemp');
-	localStorage.removeItem('VideoTemp');
-
-	$('#overlay').remove();
-
-});*/
-
-/*$(document).on("pageshow","#HomePage",function(){
-
-	//Check if MyCrimeReports from local storage exist and Populate "My Reports Lists"
-	var html = '';
-	if(typeof(Storage) !== "undefined") {
-	    if (localStorage.MyCrimeReports) {
-	    	var locz = localStorage.MyCrimeReports;
-	    	var myCrimeReports = JSON.parse(locz);
-	    	var x = myCrimeReports.length;
-	    	//alert(myCrimeReports.length);
-	    	//$('.MyReportHeader').append('('+myCrimeReports.length+')');
-	    	if(myCrimeReports.length > 0){
-	    		for(var i = 0 ; i < myCrimeReports.length; i++){
-	    			x = x - 1;
-		    		html += '<li><a href="MyReport.html?id='+myCrimeReports[x].ReportId+'" class="ui-btn ui-btn-icon-right ui-icon-carat-r">'+ myCrimeReports[x].ReportType +'</a></li>';
-		    	}
-		    	$('.MyReportList').html(html);
-		    	$('.NoReports').hide();
-	    	}
-	    	else{
-	    		$('.NoReports').show();
-	    	}
-	    } 
-	    else {
-	        $('.NoReports').show();
-	    }
-	} else {
-	    document.getElementById("result").innerHTML = "Sorry, your phone does not support local storage...";
-	    console.log('not available');
-	}
-
-	$('#ClearReports').bind( 'click', function(event, ui) {
-		localStorage.clear();
-		$('.MyReportList').html('');
-	});
-	
-});*/
-
-/*$(document).on("pageshow","#MyReport",function(){
-
-	loading();
-
-	ReportId = getQueryVariable('id');
-
-	myCrimeReports = JSON.parse(localStorage.MyCrimeReports);
-
-	if(myCrimeReports[ReportId].Img != ''){
-		$('.ReportImg').show();
-		$('#myImage').attr('src','data:image/jpeg;base64,' + myCrimeReports[ReportId].Img);
-		$('#myImagePopUp').attr('src','data:image/jpeg;base64,' + myCrimeReports[ReportId].Img);
-	}
-
-	$('.ReportType').append('<b>' + myCrimeReports[ReportId].ReportType + '</b>');
-	$('.Alias').append('<b>' + myCrimeReports[ReportId].Alias + '</b>');
-	$('.Island').append('<b>' + myCrimeReports[ReportId].Island + '</b>');
-	$('.Info').append('<b>' + myCrimeReports[ReportId].Info + '</b>');
-	// $('.fullname').append(myCrimeReports[ReportId].FullName + '</b>');
-	// $('.phonenum').append(myCrimeReports[ReportId].PhoneNum + '</b>');
-	// $('.email').append(myCrimeReports[ReportId].Email + '</b>');
-	$('.WhenDate').append('<b>' + myCrimeReports[ReportId].WhenDate + '</b>');
-
-	$('#overlay').remove();
-	
-});*/
