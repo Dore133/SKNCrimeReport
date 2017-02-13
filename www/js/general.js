@@ -198,12 +198,13 @@ $(document).on("pageshow","#ReportDetails",function(){
 	        var ImgFileType = ['jpg','jpeg','png','gif','bmp','tiff'];
 
 			var image = document.getElementById('myImage');
-
+			alert('newpath '+ newpath);
+			alert('imageData '+ imageData);
 			//Save Img Path to local storage
 	        var ImgTempArray = [];
 
 	        var ImgTempObj = {
-					ImgPath: newpath
+					ImgPath: imageData
 				};
 
 			ImgTempArray.push(ImgTempObj);
